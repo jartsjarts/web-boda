@@ -1,0 +1,50 @@
+<div class="container container-default">
+<h1>{{title}}</h1>
+<div class="row">
+    <div class="col-md-6 well">
+        <form (ngSubmit)="save()" #userForm="ngForm">
+            <fieldset>
+                <legend>Exchange plan</legend>
+                <div class="form-group">
+                    <label>From</label>
+                    <input id="from" type="datetime-local" class="form-control" [(ngModel)]="plan.from" required name="name" #name="ngModel">
+                </div>
+
+                <div class="form-group">
+                    <label>To</label>
+                    <input id="to" type="datetime-local" class="form-control" [(ngModel)]="plan.to" required name="name" #name="ngModel">
+                </div>
+
+                <div class="form-group">
+                    <label>Source currency</label>
+                    <select #currin (change)="selectedCurrInChanged(currin.value, currout.value)" id="currencyIn" class="form-control">
+                        <option *ngFor="let currency of currencies" [value]="currency.code" >
+                            {{currency.name}} {{currency.symbol}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Destination currency</label>
+                    <select #currout (change)="selectedCurrOutChanged(currout.selected, currin.value)" id="currencyOut" class="form-control">
+                        <option *ngFor="let currency of currencies" [value]="currency.code">
+                            {{currency.name}} {{currency.symbol}}
+                        </option>
+                    </select>
+                </div>
+
+                <div *ngIf="isSameCurrency" class="alert alert-danger">
+                    Currencies should be different
+                </div>
+
+                <div class="form-group">
+                    <label>Amount</label>
+                    <input type="number" class="form-control" name="amount" [(ngModel)]="plan.amount">
+                </div>
+                
+            </fieldset>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+</div>
